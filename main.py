@@ -1,21 +1,29 @@
-from sklearn.datasets import load_iris
-from sklearn.model_selection import train_test_split
+import numpy as np
 from sklearn.neighbors import KNeighborsClassifier
 
-iris = load_iris()
+X = np.array([
+    [30],
+    [45],
+    [50],
+    [60],
+    [75],
+    [90]
+])
 
-X = iris.data
-y = iris.target
+y = np.array([
+    "very cheap",
+    "cheap",
+    "little cheap",
+    "little expensive",
+    "expensive",
+    "very expensive"
+])
 
-X_train, X_test, y_train, y_test = train_test_split(
-    X, y, test_size=0.2, random_state=42
-)
+model = KNeighborsClassifier(n_neighbors=1)
+model.fit(X, y)
 
-model = KNeighborsClassifier(n_neighbors=3)
-model.fit(X_train, y_train)
+size = np.array([[70]])
+prediction = model.predict(size)
 
-accuracy = model.score(X_test, y_test)
-print("Accuracy:", accuracy)
-
-prediction = model.predict([[5.1, 3.5, 1.4, 0.2]])
-print("Prediction:", prediction)
+print("Size:", size[0][0], "m²")
+print("Category:", prediction[0])
